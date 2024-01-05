@@ -24,5 +24,3 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('contacts', ContactController::class);
 });
-
-Route::get('/home', [DashboardController::class, 'index'])->name('home');

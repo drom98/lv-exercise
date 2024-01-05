@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ContactController extends Controller
 {
@@ -28,11 +29,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-           'name' => ['required', 'min:5'],
-           'contact' => ['required', 'digits:9', 'unique:contacts'],
-           'email' => ['required', 'email', 'unique:contacts'],
-        ]);
+        $this->validateRequest($request);
 
         Contact::create([
            'name' => $request->name,
@@ -56,7 +53,7 @@ class ContactController extends Controller
      */
     public function edit(contact $contact)
     {
-        //
+        return view('contacts.edit')->with('contact', $contact);
     }
 
     /**
@@ -64,7 +61,14 @@ class ContactController extends Controller
      */
     public function update(Request $request, contact $contact)
     {
-        //
+        $this->validateRequest($request);
+
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->contact = $request->contact;
+        $contact->save();
+
+        return redirect(route('contacts.index'))->with('success', 'Contacto atualizado corretamente.');
     }
 
     /**
@@ -73,5 +77,14 @@ class ContactController extends Controller
     public function destroy(contact $contact)
     {
         //
+    }
+
+    private function validateRequest(Request $request)
+    {
+        return $request->validate([
+            'name' => ['required', 'min:5'],
+            'contact' => ['required', 'digits:9', Rule::unique('contacts')->ignore($request->route('contact.id'))],
+            'email' => ['required', 'email', Rule::unique('contacts')->ignore($request->route('contact.id'))],
+        ]);
     }
 }

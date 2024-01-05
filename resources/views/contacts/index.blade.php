@@ -11,10 +11,16 @@
                     </svg>
                     Adicionar contacto
                 </a>
+
+                @if (session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {!! session('success') !!}
+                    </div>
+                @endif
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Lista de contactos</div>
+                    <div class="card-header">Lista de contactos ({{ \App\Models\Contact::count() }})</div>
 
                     <div class="card-body">
                         <table class="table table-striped">
@@ -25,6 +31,7 @@
                                 <th>Contacto</th>
                                 <th>Email</th>
                                 <th>Criado a</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -35,6 +42,10 @@
                                     <td>{{ $contact->contact }}</td>
                                     <td>{{ $contact->email }}</td>
                                     <td>{{ $contact->created_at }}</td>
+                                    <td>
+                                        <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Editar</a>
+                                        <button class="btn btn-block btn-sm btn-danger">Remover</button>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
