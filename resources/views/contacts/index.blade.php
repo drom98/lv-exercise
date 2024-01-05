@@ -44,7 +44,7 @@
                                     <td>{{ $contact->created_at }}</td>
                                     <td>
                                         <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Editar</a>
-                                        <button class="btn btn-block btn-sm btn-danger">Remover</button>
+                                        <button class="btn btn-block btn-sm btn-danger" onclick="fetchDelete('{{ $contact->id }}', '/contacts/', '{{ $contact->name }}');">Remover</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -56,3 +56,30 @@
         </div>
     </div>
 @endsection
+
+@push('delete')
+    <script>
+        const getCSFR = () => document.querySelector('input[name=_token]').value;
+
+        const fetchDelete = (id, url, contact = '') => {
+            document.body.style.cursor = 'wait';
+
+            const headers = new Headers({
+                'X-CSRF-TOKEN': getCSFR()
+            })
+
+            if (confirm('Deseja eliminar "' + contact + '" permanentemente?')) {
+
+                return fetch(url + id, {
+                    method: 'DELETE',
+                    headers
+                }).then(function () {
+                    window.location.reload();
+                })
+
+            }
+
+            document.body.style.cursor = 'unset';
+        }
+    </script>
+@endpush

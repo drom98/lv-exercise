@@ -76,7 +76,13 @@ class ContactController extends Controller
      */
     public function destroy(contact $contact)
     {
-        //
+        try {
+            $contact->delete();
+        } catch (\Exception $e) {
+            return session()->flash('error', 'Ocorreu um erro ao eliminar o contacto. ' . $e->getMessage());
+        }
+
+        return redirect(route('contacts.index'))->with('success', 'Contacto eliminado.');
     }
 
     private function validateRequest(Request $request)

@@ -24,5 +24,8 @@
             @yield('content')
         </main>
     </div>
+
+@stack('delete')
+
 </body>
 </html>
