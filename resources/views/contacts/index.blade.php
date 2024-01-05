@@ -30,30 +30,3 @@
         </div>
     </div>
 @endsection
-
-@push('delete')
-    <script>
-        const getCSFR = () => document.querySelector('input[name=_token]').value;
-
-        const fetchDelete = (id, url, contact = '') => {
-            document.body.style.cursor = 'wait';
-
-            const headers = new Headers({
-                'X-CSRF-TOKEN': getCSFR()
-            })
-
-            if (confirm('Deseja eliminar "' + contact + '" permanentemente?')) {
-
-                return fetch(url + id, {
-                    method: 'DELETE',
-                    headers
-                }).then(function () {
-                    window.location.reload();
-                })
-
-            }
-
-            document.body.style.cursor = 'unset';
-        }
-    </script>
-@endpush

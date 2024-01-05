@@ -21,6 +21,7 @@
             <td>{{ $contact->created_at }}</td>
             @auth()
             <td>
+                <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Ver</a>
                 <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Editar</a>
                 <button class="btn btn-block btn-sm btn-danger" onclick="fetchDelete('{{ $contact->id }}', '/contacts/', '{{ $contact->name }}');">Remover</button>
             </td>
