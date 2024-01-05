@@ -20,36 +20,10 @@
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Lista de contactos ({{ \App\Models\Contact::count() }})</div>
+                    <div class="card-header">Contactos ({{ \App\Models\Contact::count() }})</div>
 
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Contacto</th>
-                                <th>Email</th>
-                                <th>Criado a</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($contacts as $contact)
-                                <tr>
-                                    <td>{{ $contact->id }}</td>
-                                    <td>{{ $contact->name }}</td>
-                                    <td>{{ $contact->contact }}</td>
-                                    <td>{{ $contact->email }}</td>
-                                    <td>{{ $contact->created_at }}</td>
-                                    <td>
-                                        <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Editar</a>
-                                        <button class="btn btn-block btn-sm btn-danger" onclick="fetchDelete('{{ $contact->id }}', '/contacts/', '{{ $contact->name }}');">Remover</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        @include('partials.contacts-table')
                     </div>
                 </div>
             </div>
