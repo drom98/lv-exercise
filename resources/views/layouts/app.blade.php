@@ -35,7 +35,7 @@
                 'X-CSRF-TOKEN': getCSFR()
             })
 
-            if (confirm('Deseja eliminar "' + contact + '" permanentemente?')) {
+            if (confirm('Deseja eliminar "' + contact + '"?')) {
 
                 return fetch(url + id, {
                     method: 'DELETE',
