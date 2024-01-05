@@ -18,7 +18,7 @@
             <td>{{ $contact->name }}</td>
             <td>{{ $contact->contact }}</td>
             <td>{{ $contact->email }}</td>
-            <td>{{ $contact->created_at }}</td>
+            <td>{{ $contact->created_at->format('d/m/Y H:i') }}</td>
             @auth()
             <td>
                 <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-block btn-sm btn-primary">Ver</a>
